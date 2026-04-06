@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Vamsi's Wedding Shred Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #1D9E75;
+    --green-dark: #085041;
+    --green-light: #E1F5EE;
+    --green-mid: #0F6E56;
+    --amber: #EF9F27;
+    --amber-light: #FAEEDA;
+    --bg: #0c1a14;
+    --bg2: #132319;
+    --bg3: #1a2e22;
+    --card: #1e3328;
+    --card2: #243d2f;
+    --text: #e8f5ef;
+    --text2: #9abfac;
+    --text3: #6a9980;
+    --border: rgba(29,158,117,0.18);
+    --border2: rgba(29,158,117,0.32);
+    --serif: 'DM Serif Display', serif;
+    --sans: 'DM Sans', sans-serif;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  html { -webkit-tap-highlight-color: transparent; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(160deg, #0e2419 0%, #0c1a14 60%, #091510 100%);
+    padding: 48px 20px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%; transform: translateX(-50%);
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(29,158,117,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--green);
+    border: 1px solid var(--border2);
+    border-radius: 99px;
+    padding: 5px 14px;
+    margin-bottom: 16px;
+    background: rgba(29,158,117,0.08);
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 8vw, 42px);
+    line-height: 1.15;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .hero h1 span { color: var(--green); font-style: italic; }
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  .hero-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .hstat {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 6px;
+    text-align: center;
+  }
+  .hstat-val { font-size: 18px; font-weight: 600; color: var(--green); }
+  .hstat-lbl { font-size: 10px; color: var(--text3); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* Nav */
+  .week-nav {
+    display: flex;
+    gap: 8px;
+    padding: 16px 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .week-nav::-webkit-scrollbar { display: none; }
+  .wnav-btn {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    border-radius: 99px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text2);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .wnav-btn.active {
+    background: var(--green);
+    border-color: var(--green);
+    color: #fff;
+  }
+
+  /* Content */
+  .content { padding: 20px; max-width: 480px; margin: 0 auto; }
+
+  .week-label {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .week-desc { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
+
+  /* Day cards */
+  .day-cards { display: flex; flex-direction: column; gap: 12px; }
+
+  .day-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .day-card.active { border-color: var(--green); }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+  }
+  .day-left { display: flex; align-items: center; gap: 12px; }
+  .day-dot {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600;
+    color: var(--green);
+    letter-spacing: 0.04em;
+    flex-shrink: 0;
+  }
+  .day-name { font-size: 15px; font-weight: 600; color: var(--text); }
+  .day-muscles { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .day-right { display: flex; align-items: center; gap: 8px; }
+  .cardio-chip {
+    font-size: 11px; font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 99px;
+    background: rgba(239,159,39,0.12);
+    color: var(--amber);
+    border: 1px solid rgba(239,159,39,0.25);
+  }
+  .chevron {
+    width: 20px; height: 20px;
+    border-right: 2px solid var(--text3);
+    border-bottom: 2px solid var(--text3);
+    transform: rotate(45deg);
+    transition: transform 0.25s;
+    margin-top: -4px;
+  }
+  .day-card.active .chevron { transform: rotate(-135deg); margin-top: 4px; }
+
+  /* Exercise table */
+  .exercise-body {
+    display: none;
+    border-top: 1px solid var(--border);
+    padding: 16px 18px 20px;
+    animation: slideDown 0.2s ease;
+  }
+  .day-card.active .exercise-body { display: block; }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ex-table { width: 100%; border-collapse: collapse; }
+  .ex-table th {
+    font-size: 10px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text3);
+    text-align: left;
+    padding: 0 0 10px;
+  }
+  .ex-table th:nth-child(2), .ex-table th:nth-child(3) { text-align: center; }
+  .ex-table td {
+    font-size: 13px;
+    color: var(--text);
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(29,158,117,0.08);
+    line-height: 1.4;
+    vertical-align: middle;
+  }
+  .ex-table tr:last-child td { border-bottom: none; }
+  .ex-table td:nth-child(2) { text-align: center; }
+  .ex-table td:nth-child(3) { text-align: center; }
+  .vol-badge {
+    display: inline-block;
+    background: rgba(29,158,117,0.12);
+    color: var(--green);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .rest-badge {
+    color: var(--text3);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .cardio-box {
+    margin-top: 16px;
+    background: rgba(239,159,39,0.07);
+    border: 1px solid rgba(239,159,39,0.2);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+  }
+  .cardio-box-title {
+    font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--amber);
+    margin-bottom: 8px;
+  }
+  .cardio-row {
+    display: flex; justify-content: space-between;
+    font-size: 13px;
+    color: #c5993a;
+  }
+  .cardio-row span:last-child { color: var(--amber); font-weight: 500; }
+
+  /* Tips section */
+  .tips-section {
+    margin-top: 28px;
+    padding: 20px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .tips-title {
+    font-family: var(--serif);
+    font-size: 18px;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+  .tip-item {
+    display: flex; gap: 12px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+  .tip-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--green-light);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: var(--green-dark);
+  }
+  .tip-text { font-size: 13px; color: var(--text2); line-height: 1.6; padding-top: 5px; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 20px 40px;
+    color: var(--text3);
+    font-size: 12px;
+  }
+  .footer strong { color: var(--green); }
+
+  /* Hide all weeks except active */
+  .week-content { display: none; }
+  .week-content.active { display: block; }
+
+  /* Progress bar on hero */
+  .progress-strip {
+    display: flex; gap: 6px;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  .prog-dot {
+    height: 4px; width: 36px;
+    border-radius: 99px;
+    background: var(--border);
+  }
+  .prog-dot.filled { background: var(--green); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Wedding Prep · May 10, 2026</div>
+  <h1>Your <span>Wedding Shred</span><br>Workout Plan</h1>
+  <p class="hero-sub">5 days/week · ~2 hours/session · 4 weeks<br>Gym · Strength + Cardio · Fat Loss</p>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-val">4</div><div class="hstat-lbl">Weeks</div></div>
+    <div class="hstat"><div class="hstat-val">5</div><div class="hstat-lbl">Days/wk</div></div>
+    <div class="hstat"><div class="hstat-val">20</div><div class="hstat-lbl">Sessions</div></div>
+    <div class="hstat"><div class="hstat-val">~5kg</div><div class="hstat-lbl">Goal</div></div>
+  </div>
+</div>
+
+<div class="week-nav">
+  <button class="wnav-btn active" onclick="showWeek(0)">Week 1 — Foundation</button>
+  <button class="wnav-btn" onclick="showWeek(1)">Week 2 — Volume</button>
+  <button class="wnav-btn" onclick="showWeek(2)">Week 3 — Intensity</button>
+  <button class="wnav-btn" onclick="showWeek(3)">Week 4 — Peak Cut</button>
+</div>
+
+<div class="content">
+
+  <!-- WEEK 1 -->
+  <div class="week-content active" id="week-0">
+    <h2 class="week-label">Week 1 — Foundation</h2>
+    <p class="week-desc">Moderate weights, perfect form, building the base. 3–4 sets per exercise.</p>
+    <div class="day-cards">
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left">
+            <div class="day-dot">MON</div>
+            <div>
+              <div class="day-name">Chest + Triceps</div>
+              <div class="day-muscles">6 exercises · 20 min cardio</div>
+            </div>
+          </div>
+          <div class="day-right">
+            <div class="cardio-chip">Cardio</div>
+            <div class="chevron"></div>
+          </div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Flat Barbell Bench Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Incline Dumbbell Press</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Pec Deck / Cable Fly</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Dips (BW or assisted)</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Overhead Tricep Extension</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Tricep Pushdown</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Steady-state walk</span><span>20 min @ 6 km/h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left">
+            <div class="day-dot">TUE</div>
+            <div>
+              <div class="day-name">Back + Biceps</div>
+              <div class="day-muscles">6 exercises · 15 min cardio</div>
+            </div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Deadlift</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
+              <tr><td>Barbell Bent-over Row</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Lat Pulldown</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Seated Cable Row</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Barbell Curl</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Hammer Curl</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Stationary bike</span><span>15 min moderate</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left">
+            <div class="day-dot">WED</div>
+            <div>
+              <div class="day-name">Shoulders + Abs</div>
+              <div class="day-muscles">6 exercises · 20 min LISS</div>
+            </div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Overhead Barbell Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Dumbbell Lateral Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Face Pulls</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Front Raise</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Cable Crunch</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">45s</span></td></tr>
+              <tr><td>Plank</td><td><span class="vol-badge">3×45s</span></td><td><span class="rest-badge">45s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Incline treadmill walk</span><span>20 min @ 4% incline</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left">
+            <div class="day-dot">THU</div>
+            <div>
+              <div class="day-name">Legs — Quad Focus</div>
+              <div class="day-muscles">5 exercises · 15 min HIIT</div>
+            </div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Barbell Squat</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">2 min</span></td></tr>
+              <tr><td>Leg Press</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Leg Extension</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Walking Lunges</td><td><span class="vol-badge">3×12/leg</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Standing Calf Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 HIIT Finisher</div>
+            <div class="cardio-row"><span>Treadmill sprints</span><span>30s on / 60s walk × 10</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left">
+            <div class="day-dot">FRI</div>
+            <div>
+              <div class="day-name">Legs — Ham + Glute</div>
+              <div class="day-muscles">5 exercises · 20 min steady</div>
+            </div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Romanian Deadlift</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Lying Leg Curl</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Hip Thrust</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Goblet / Sumo Squat</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Seated Calf Raise</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Elliptical</span><span>20 min moderate resistance</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-content" id="week-1">
+    <h2 class="week-label">Week 2 — Volume</h2>
+    <p class="week-desc">Add one extra set per compound lift. Push cardio duration up by 5 min.</p>
+    <div class="day-cards">
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">MON</div>
+            <div><div class="day-name">Chest + Triceps</div><div class="day-muscles">6 exercises · 25 min cardio</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Flat Barbell Bench Press</td><td><span class="vol-badge">5×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Incline Dumbbell Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Cable Fly (low to high)</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Close-grip Bench Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Skull Crushers</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Rope Pushdown</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Incline treadmill walk</span><span>25 min @ 6% incline</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">TUE</div>
+            <div><div class="day-name">Back + Biceps</div><div class="day-muscles">6 exercises · 20 min cardio</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Deadlift</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
+              <tr><td>T-Bar Row</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Wide-grip Pull-up / Assisted</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Single-arm DB Row</td><td><span class="vol-badge">3×12/side</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>EZ-Bar Curl</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Incline DB Curl</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Stationary bike</span><span>20 min moderate-high</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">WED</div>
+            <div><div class="day-name">Shoulders + Abs</div><div class="day-muscles">6 exercises · 25 min LISS</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Seated DB Shoulder Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Arnold Press</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Cable Lateral Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Rear Delt Fly (machine)</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Hanging Leg Raise</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">45s</span></td></tr>
+              <tr><td>Russian Twists</td><td><span class="vol-badge">3×20</span></td><td><span class="rest-badge">45s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Incline treadmill walk</span><span>25 min @ 5% incline</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">THU</div>
+            <div><div class="day-name">Legs — Quad Focus</div><div class="day-muscles">5 exercises · 20 min HIIT</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Barbell Squat</td><td><span class="vol-badge">5×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
+              <tr><td>Hack Squat</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Leg Extension (drop set)</td><td><span class="vol-badge">3×12+drop</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Bulgarian Split Squat</td><td><span class="vol-badge">3×10/leg</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Standing Calf Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 HIIT Finisher</div>
+            <div class="cardio-row"><span>Treadmill sprints</span><span>40s on / 60s walk × 12</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">FRI</div>
+            <div><div class="day-name">Legs — Ham + Glute</div><div class="day-muscles">5 exercises · 25 min steady</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Romanian Deadlift</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Seated Leg Curl</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Hip Thrust (barbell)</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Step-ups with DB</td><td><span class="vol-badge">3×12/leg</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Seated Calf Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Elliptical</span><span>25 min moderate-high resistance</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-content" id="week-2">
+    <h2 class="week-label">Week 3 — Intensity</h2>
+    <p class="week-desc">Heavier loads, lower reps on compounds. Cardio starts hitting harder.</p>
+    <div class="day-cards">
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">MON</div>
+            <div><div class="day-name">Chest + Triceps</div><div class="day-muscles">6 exercises · 25 min LISS</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Flat Barbell Bench Press</td><td><span class="vol-badge">5×8</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Incline DB Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Decline Bench Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Weighted Dips</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Close-grip Bench Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Cable Overhead Tricep Ext</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Incline walk</span><span>25 min @ 7%, 5.5 km/h</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">TUE</div>
+            <div><div class="day-name">Back + Biceps</div><div class="day-muscles">6 exercises · 20 min HIIT</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Weighted Pull-up</td><td><span class="vol-badge">4×6–8</span></td><td><span class="rest-badge">2 min</span></td></tr>
+              <tr><td>Barbell Row (heavy)</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Meadows Row</td><td><span class="vol-badge">3×10/side</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Straight-arm Pulldown</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Barbell Preacher Curl</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Cable Curl</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 HIIT Finisher</div>
+            <div class="cardio-row"><span>Bike HIIT</span><span>30s max / 90s easy × 10</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">WED</div>
+            <div><div class="day-name">Shoulders + Abs</div><div class="day-muscles">6 exercises · 25 min LISS</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Standing Barbell OHP</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Lateral + Front Raise superset</td><td><span class="vol-badge">4×12+12</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Cable Face Pull</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Shrugs</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Cable Crunch (heavy)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">45s</span></td></tr>
+              <tr><td>Ab Wheel Rollout</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">45s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Treadmill incline walk</span><span>25 min @ 6% incline</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">THU</div>
+            <div><div class="day-name">Legs — Quad Focus</div><div class="day-muscles">5 exercises · 20 min HIIT</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Barbell Back Squat</td><td><span class="vol-badge">5×6</span></td><td><span class="rest-badge">2 min</span></td></tr>
+              <tr><td>Front Squat</td><td><span class="vol-badge">3×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
+              <tr><td>Leg Press (high vol)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Leg Extension</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Calf Raise superset</td><td><span class="vol-badge">4×15+15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 HIIT Finisher</div>
+            <div class="cardio-row"><span>Stairmaster HIIT</span><span>1 min fast / 1 min slow × 10</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">FRI</div>
+            <div><div class="day-name">Legs — Ham + Glute</div><div class="day-muscles">5 exercises · 30 min steady</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Sumo Deadlift</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
+              <tr><td>Nordic Hamstring Curl</td><td><span class="vol-badge">3×8</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Hip Thrust (heavy)</td><td><span class="vol-badge">5×10</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Reverse Lunge</td><td><span class="vol-badge">3×10/leg</span></td><td><span class="rest-badge">75s</span></td></tr>
+              <tr><td>Calf Raise machine</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Elliptical</span><span>30 min, last 10 min high resistance</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-content" id="week-3">
+    <h2 class="week-label">Week 4 — Peak Cut</h2>
+    <p class="week-desc">Lighter weights, higher reps, shorter rest. Maximum fat burn before May 10.</p>
+    <div class="day-cards">
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">MON</div>
+            <div><div class="day-name">Chest + Triceps</div><div class="day-muscles">5 exercises · 30 min HIIT</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Flat DB Bench (lighter, faster)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Incline Cable Fly</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Push-up (weighted vest)</td><td><span class="vol-badge">3×20</span></td><td><span class="rest-badge">45s</span></td></tr>
+              <tr><td>Tricep Dips</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Rope Pushdown + OH Ext superset</td><td><span class="vol-badge">3×12+12</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 HIIT Finisher</div>
+            <div class="cardio-row"><span>Treadmill HIIT</span><span>45s sprint / 45s walk × 15</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">TUE</div>
+            <div><div class="day-name">Back + Biceps</div><div class="day-muscles">5 exercises · 30 min LISS</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Pull-up (max reps)</td><td><span class="vol-badge">4×max</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Seated Cable Row</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Lat Pulldown (wide)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Face Pull</td><td><span class="vol-badge">3×20</span></td><td><span class="rest-badge">45s</span></td></tr>
+              <tr><td>DB Curl + Hammer Curl superset</td><td><span class="vol-badge">3×12+12</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Incline walk</span><span>30 min @ 8% incline</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">WED</div>
+            <div><div class="day-name">Shoulders + Abs</div><div class="day-muscles">4 exercises · 30 min HIIT</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>DB Shoulder Press circuit</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Cable Lateral Raise</td><td><span class="vol-badge">4×20</span></td><td><span class="rest-badge">45s</span></td></tr>
+              <tr><td>Rear Delt Fly</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">45s</span></td></tr>
+              <tr><td>Full Core Circuit (4 moves)</td><td><span class="vol-badge">4×15 each</span></td><td><span class="rest-badge">30s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 HIIT Finisher</div>
+            <div class="cardio-row"><span>Stairmaster / Elliptical HIIT</span><span>30 min alternating 2 min high/low</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">THU</div>
+            <div><div class="day-name">Full Legs — Circuit</div><div class="day-muscles">5 exercises · 30 min HIIT</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Squat to Press (DB)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Leg Press (high rep)</td><td><span class="vol-badge">4×20</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Romanian Deadlift</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Walking Lunges</td><td><span class="vol-badge">3×20/leg</span></td><td><span class="rest-badge">60s</span></td></tr>
+              <tr><td>Jump Squat</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">45s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 HIIT Finisher</div>
+            <div class="cardio-row"><span>Bike HIIT</span><span>40s max / 40s easy × 15</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="day-card" onclick="toggleDay(this)">
+        <div class="day-header">
+          <div class="day-left"><div class="day-dot">FRI</div>
+            <div><div class="day-name">Full Body Power</div><div class="day-muscles">5 exercises · 30 min steady</div></div>
+          </div>
+          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
+        </div>
+        <div class="exercise-body">
+          <table class="ex-table">
+            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
+            <tbody>
+              <tr><td>Deadlift (moderate)</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Bench Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Pull-up or Lat Pulldown</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Overhead Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">90s</span></td></tr>
+              <tr><td>Farmer's Carry</td><td><span class="vol-badge">3×40m</span></td><td><span class="rest-badge">60s</span></td></tr>
+            </tbody>
+          </table>
+          <div class="cardio-box">
+            <div class="cardio-box-title">🔥 Cardio Finisher</div>
+            <div class="cardio-row"><span>Steady-state jog</span><span>30 min comfortable pace</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Tips -->
+  <div class="tips-section">
+    <div class="tips-title">Key Tips for Wedding Prep</div>
+    <div class="tip-item">
+      <div class="tip-icon">💧</div>
+      <div class="tip-text">Drink 3–4 litres of water daily, especially on leg days. Hydration directly impacts fat metabolism.</div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">🥗</div>
+      <div class="tip-text">Target ~150–160g protein/day (chicken, eggs, paneer, dal). Aim for a 400–500 cal daily deficit.</div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">😴</div>
+      <div class="tip-text">7–8 hours of sleep is non-negotiable. Most fat loss and muscle repair happens during deep sleep.</div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">📈</div>
+      <div class="tip-text">Track weights every session. Progressive overload (even small increases) is what drives results week-over-week.</div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">🧂</div>
+      <div class="tip-text">The week before May 10: cut sodium and processed foods. You'll look visibly leaner and less bloated on the day.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built for <strong>Vamsi's Wedding Shred</strong> · May 10, 2026 🎉<br>
+    Sat & Sun are rest days — recover fully.
+  </div>
+
+</div>
+
+<script>
+  function showWeek(w) {
+    document.querySelectorAll('.wnav-btn').forEach((b, i) => b.classList.toggle('active', i === w));
+    document.querySelectorAll('.week-content').forEach((c, i) => c.classList.toggle('active', i === w));
+    document.querySelector('.week-nav').children[w].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleDay(card) {
+    const isActive = card.classList.contains('active');
+    document.querySelectorAll('.day-card').forEach(c => c.classList.remove('active'));
+    if (!isActive) card.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
