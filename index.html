@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<title>Vamsi's Wedding Shred Plan</title>
+<title>2-Hour Gym Workout Plan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -18,6 +16,8 @@
     --green-mid: #0F6E56;
     --amber: #EF9F27;
     --amber-light: #FAEEDA;
+    --red: #E05A5A;
+    --blue: #5A9BE0;
     --bg: #0c1a14;
     --bg2: #132319;
     --bg3: #1a2e22;
@@ -34,7 +34,7 @@
     --radius-sm: 10px;
   }
 
-  html { -webkit-tap-highlight-color: transparent; }
+  html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
   body {
     font-family: var(--sans);
     background: var(--bg);
@@ -43,7 +43,7 @@
     overflow-x: hidden;
   }
 
-  /* Hero */
+  /* ── HERO ── */
   .hero {
     background: linear-gradient(160deg, #0e2419 0%, #0c1a14 60%, #091510 100%);
     padding: 48px 20px 36px;
@@ -55,9 +55,9 @@
   .hero::before {
     content: '';
     position: absolute;
-    top: -60px; left: 50%; transform: translateX(-50%);
-    width: 320px; height: 320px;
-    background: radial-gradient(circle, rgba(29,158,117,0.15) 0%, transparent 70%);
+    top: -80px; left: 50%; transform: translateX(-50%);
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(29,158,117,0.12) 0%, transparent 70%);
     pointer-events: none;
   }
   .hero-tag {
@@ -73,10 +73,10 @@
   }
   .hero h1 {
     font-family: var(--serif);
-    font-size: clamp(28px, 8vw, 42px);
+    font-size: clamp(28px, 8vw, 46px);
     line-height: 1.15;
     color: var(--text);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
   .hero h1 span { color: var(--green); font-style: italic; }
   .hero-sub {
@@ -84,13 +84,16 @@
     color: var(--text2);
     margin-bottom: 28px;
     line-height: 1.6;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
   }
   .hero-stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
-    max-width: 360px;
-    margin: 0 auto;
+    max-width: 380px;
+    margin: 0 auto 20px;
   }
   .hstat {
     background: var(--card);
@@ -99,11 +102,33 @@
     padding: 12px 6px;
     text-align: center;
   }
-  .hstat-val { font-size: 18px; font-weight: 600; color: var(--green); }
+  .hstat-val { font-size: 18px; font-weight: 700; color: var(--green); }
   .hstat-lbl { font-size: 10px; color: var(--text3); margin-top: 2px; text-transform: uppercase; letter-spacing: 0.05em; }
 
-  /* Nav */
-  .week-nav {
+  /* ── TIMELINE BAR ── */
+  .timeline-bar {
+    max-width: 480px; margin: 0 auto 0;
+    padding: 0 20px;
+  }
+  .tl-title { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; text-align: center; padding-top: 24px; }
+  .tl-track {
+    display: flex;
+    border-radius: 99px;
+    overflow: hidden;
+    height: 10px;
+    gap: 2px;
+  }
+  .tl-seg { height: 100%; border-radius: 99px; transition: opacity 0.2s; }
+  .tl-labels { display: flex; justify-content: space-between; margin-top: 6px; }
+  .tl-lbl { font-size: 10px; color: var(--text3); }
+  .tl-legend {
+    display: flex; gap: 16px; justify-content: center; margin-top: 12px; flex-wrap: wrap;
+  }
+  .tl-leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text2); }
+  .tl-leg-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ── NAV ── */
+  .day-nav {
     display: flex;
     gap: 8px;
     padding: 16px 20px;
@@ -115,8 +140,8 @@
     top: 0;
     z-index: 100;
   }
-  .week-nav::-webkit-scrollbar { display: none; }
-  .wnav-btn {
+  .day-nav::-webkit-scrollbar { display: none; }
+  .dnav-btn {
     flex-shrink: 0;
     padding: 8px 16px;
     border-radius: 99px;
@@ -130,837 +155,971 @@
     transition: all 0.2s;
     white-space: nowrap;
   }
-  .wnav-btn.active {
+  .dnav-btn.active {
     background: var(--green);
     border-color: var(--green);
     color: #fff;
   }
+  .dnav-btn:hover:not(.active) { border-color: var(--green); color: var(--green); }
 
-  /* Content */
-  .content { padding: 20px; max-width: 480px; margin: 0 auto; }
+  /* ── CONTENT PANE ── */
+  .content { padding: 20px; max-width: 520px; margin: 0 auto; }
+  .day-pane { display: none; }
+  .day-pane.active { display: block; }
 
-  .week-label {
-    font-family: var(--serif);
-    font-size: 22px;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
-  .week-desc { font-size: 13px; color: var(--text2); margin-bottom: 20px; }
-
-  /* Day cards */
-  .day-cards { display: flex; flex-direction: column; gap: 12px; }
-
-  .day-card {
+  .day-intro {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.2s;
+    padding: 20px;
+    margin-bottom: 20px;
   }
-  .day-card.active { border-color: var(--green); }
-
-  .day-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px 18px;
-  }
-  .day-left { display: flex; align-items: center; gap: 12px; }
-  .day-dot {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    background: var(--bg3);
+  .day-intro-row { display: flex; align-items: flex-start; gap: 14px; }
+  .day-icon {
+    width: 52px; height: 52px; border-radius: 12px;
+    background: rgba(29,158,117,0.12);
     border: 1px solid var(--border2);
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 600;
-    color: var(--green);
-    letter-spacing: 0.04em;
-    flex-shrink: 0;
+    font-size: 24px; flex-shrink: 0;
   }
-  .day-name { font-size: 15px; font-weight: 600; color: var(--text); }
-  .day-muscles { font-size: 12px; color: var(--text2); margin-top: 2px; }
-  .day-right { display: flex; align-items: center; gap: 8px; }
-  .cardio-chip {
-    font-size: 11px; font-weight: 500;
-    padding: 4px 10px;
+  .day-intro-text h2 { font-family: var(--serif); font-size: 22px; color: var(--text); margin-bottom: 4px; }
+  .day-intro-text p { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .day-chips { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .chip {
+    font-size: 11px; font-weight: 600; padding: 4px 10px;
+    border-radius: 99px; letter-spacing: 0.03em;
+  }
+  .chip-green { background: rgba(29,158,117,0.15); color: var(--green); border: 1px solid rgba(29,158,117,0.3); }
+  .chip-amber { background: rgba(239,159,39,0.12); color: var(--amber); border: 1px solid rgba(239,159,39,0.25); }
+  .chip-red { background: rgba(224,90,90,0.12); color: var(--red); border: 1px solid rgba(224,90,90,0.25); }
+  .chip-blue { background: rgba(90,155,224,0.12); color: var(--blue); border: 1px solid rgba(90,155,224,0.25); }
+
+  /* ── PHASE BLOCKS ── */
+  .phase {
+    margin-bottom: 20px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .phase-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.2s;
+  }
+  .phase-header:hover { background: rgba(29,158,117,0.04); }
+  .phase-icon-wrap {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+  }
+  .phase-warmup .phase-icon-wrap { background: rgba(239,159,39,0.12); }
+  .phase-strength .phase-icon-wrap { background: rgba(29,158,117,0.12); }
+  .phase-cardio .phase-icon-wrap { background: rgba(224,90,90,0.12); }
+  .phase-cooldown .phase-icon-wrap { background: rgba(90,155,224,0.12); }
+  .phase-header-text { flex: 1; }
+  .phase-name { font-size: 15px; font-weight: 600; color: var(--text); }
+  .phase-meta { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .phase-time-badge {
+    font-size: 12px; font-weight: 600; padding: 4px 10px;
     border-radius: 99px;
-    background: rgba(239,159,39,0.12);
-    color: var(--amber);
-    border: 1px solid rgba(239,159,39,0.25);
   }
-  .chevron {
-    width: 20px; height: 20px;
+  .phase-warmup .phase-time-badge { background: rgba(239,159,39,0.12); color: var(--amber); }
+  .phase-strength .phase-time-badge { background: rgba(29,158,117,0.12); color: var(--green); }
+  .phase-cardio .phase-time-badge { background: rgba(224,90,90,0.12); color: var(--red); }
+  .phase-cooldown .phase-time-badge { background: rgba(90,155,224,0.12); color: var(--blue); }
+  .phase-chevron {
+    width: 16px; height: 16px;
     border-right: 2px solid var(--text3);
     border-bottom: 2px solid var(--text3);
     transform: rotate(45deg);
     transition: transform 0.25s;
-    margin-top: -4px;
+    flex-shrink: 0;
+    margin-left: 4px;
   }
-  .day-card.active .chevron { transform: rotate(-135deg); margin-top: 4px; }
+  .phase.open .phase-chevron { transform: rotate(-135deg); }
 
-  /* Exercise table */
-  .exercise-body {
+  .phase-body {
     display: none;
+    background: var(--bg2);
     border-top: 1px solid var(--border);
-    padding: 16px 18px 20px;
-    animation: slideDown 0.2s ease;
   }
-  .day-card.active .exercise-body { display: block; }
+  .phase.open .phase-body { display: block; }
 
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  /* ── EXERCISE CARDS ── */
+  .ex-grid { display: flex; flex-direction: column; gap: 0; }
 
-  .ex-table { width: 100%; border-collapse: collapse; }
-  .ex-table th {
-    font-size: 10px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--text3);
-    text-align: left;
-    padding: 0 0 10px;
+  .ex-card {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
   }
-  .ex-table th:nth-child(2), .ex-table th:nth-child(3) { text-align: center; }
-  .ex-table td {
-    font-size: 13px;
-    color: var(--text);
-    padding: 9px 0;
-    border-bottom: 1px solid rgba(29,158,117,0.08);
-    line-height: 1.4;
-    vertical-align: middle;
+  .ex-card:last-child { border-bottom: none; }
+  .ex-card:hover { background: rgba(29,158,117,0.03); }
+
+  .ex-img-wrap {
+    width: 90px; flex-shrink: 0;
+    position: relative; overflow: hidden;
   }
-  .ex-table tr:last-child td { border-bottom: none; }
-  .ex-table td:nth-child(2) { text-align: center; }
-  .ex-table td:nth-child(3) { text-align: center; }
-  .vol-badge {
-    display: inline-block;
-    background: rgba(29,158,117,0.12);
-    color: var(--green);
-    border-radius: 6px;
-    padding: 3px 8px;
-    font-size: 11px;
-    font-weight: 600;
-    white-space: nowrap;
+  .ex-img-wrap img {
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    filter: brightness(0.85) saturate(0.9);
   }
-  .rest-badge {
-    color: var(--text3);
-    font-size: 11px;
-    white-space: nowrap;
+  .ex-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, transparent 60%, var(--bg2) 100%);
+  }
+  .ex-img-label {
+    position: absolute; bottom: 6px; left: 6px;
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.07em; color: var(--green);
+    background: rgba(12,26,20,0.85);
+    padding: 2px 6px; border-radius: 4px;
   }
 
-  .cardio-box {
-    margin-top: 16px;
-    background: rgba(239,159,39,0.07);
-    border: 1px solid rgba(239,159,39,0.2);
+  .ex-info { flex: 1; padding: 14px 14px 14px 12px; }
+  .ex-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .ex-tip { font-size: 12px; color: var(--text2); line-height: 1.45; margin-bottom: 8px; }
+  .ex-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ex-badge {
+    font-size: 11px; font-weight: 600; padding: 3px 9px;
+    border-radius: 99px;
+  }
+  .badge-vol { background: rgba(29,158,117,0.15); color: var(--green); }
+  .badge-rest { background: rgba(255,255,255,0.06); color: var(--text2); }
+  .badge-tip { background: rgba(239,159,39,0.1); color: var(--amber); }
+
+  /* Cardio block */
+  .cardio-block { padding: 16px 18px; }
+  .cardio-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--red); margin-bottom: 10px; }
+  .cardio-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px;
+    background: rgba(224,90,90,0.06);
+    border: 1px solid rgba(224,90,90,0.15);
     border-radius: var(--radius-sm);
-    padding: 14px;
-  }
-  .cardio-box-title {
-    font-size: 11px; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 0.08em;
-    color: var(--amber);
     margin-bottom: 8px;
   }
-  .cardio-row {
-    display: flex; justify-content: space-between;
-    font-size: 13px;
-    color: #c5993a;
-  }
-  .cardio-row span:last-child { color: var(--amber); font-weight: 500; }
+  .cardio-item:last-child { margin-bottom: 0; }
+  .cardio-emoji { font-size: 20px; }
+  .cardio-label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .cardio-detail { font-size: 12px; color: var(--text2); margin-top: 2px; }
 
-  /* Tips section */
+  /* Cooldown block */
+  .cooldown-block { padding: 16px 18px; }
+  .cooldown-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px;
+    background: rgba(90,155,224,0.05);
+    border: 1px solid rgba(90,155,224,0.15);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+  }
+  .cooldown-item:last-child { margin-bottom: 0; }
+  .cooldown-label { font-size: 13px; font-weight: 600; color: var(--text); }
+  .cooldown-detail { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+  /* ── TIPS ── */
   .tips-section {
-    margin-top: 28px;
-    padding: 20px;
+    max-width: 520px; margin: 0 auto 32px;
+    padding: 0 20px;
+  }
+  .tips-card {
     background: var(--card);
     border: 1px solid var(--border);
     border-radius: var(--radius);
+    padding: 20px;
   }
-  .tips-title {
-    font-family: var(--serif);
-    font-size: 18px;
-    color: var(--text);
-    margin-bottom: 16px;
-  }
-  .tip-item {
-    display: flex; gap: 12px;
-    margin-bottom: 14px;
-    align-items: flex-start;
-  }
-  .tip-icon {
-    width: 32px; height: 32px; flex-shrink: 0;
-    border-radius: 50%;
-    background: var(--green-light);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    color: var(--green-dark);
-  }
-  .tip-text { font-size: 13px; color: var(--text2); line-height: 1.6; padding-top: 5px; }
+  .tips-title { font-family: var(--serif); font-size: 20px; color: var(--text); margin-bottom: 16px; }
+  .tip-row { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .tip-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .tip-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+  .tip-text { font-size: 13px; color: var(--text2); line-height: 1.6; }
+  .tip-text strong { color: var(--text); }
 
-  /* Footer */
+  /* ── FOOTER ── */
   .footer {
-    text-align: center;
-    padding: 32px 20px 40px;
-    color: var(--text3);
-    font-size: 12px;
+    text-align: center; padding: 24px 20px 40px;
+    font-size: 13px; color: var(--text3);
+    border-top: 1px solid var(--border);
+    max-width: 520px; margin: 0 auto;
   }
   .footer strong { color: var(--green); }
 
-  /* Hide all weeks except active */
-  .week-content { display: none; }
-  .week-content.active { display: block; }
+  /* ── SCHEDULE OVERVIEW ── */
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    max-width: 520px; margin: 0 auto;
+    padding: 20px;
+  }
+  .sched-cell {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .sched-cell:hover { border-color: var(--green); background: rgba(29,158,117,0.06); }
+  .sched-day { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 4px; }
+  .sched-name { font-size: 12px; font-weight: 600; color: var(--text); }
+  .sched-chip { font-size: 10px; margin-top: 4px; color: var(--text3); }
+  .sched-rest { opacity: 0.4; }
 
-  /* Progress bar on hero */
-  .progress-strip {
-    display: flex; gap: 6px;
-    justify-content: center;
-    margin-top: 20px;
-  }
-  .prog-dot {
-    height: 4px; width: 36px;
-    border-radius: 99px;
-    background: var(--border);
-  }
-  .prog-dot.filled { background: var(--green); }
+  /* Animations */
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  .day-pane.active { animation: fadeIn 0.25s ease; }
 </style>
 </head>
 <body>
 
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-tag">Wedding Prep · May 10, 2026</div>
-  <h1>Your <span>Wedding Shred</span><br>Workout Plan</h1>
-  <p class="hero-sub">5 days/week · ~2 hours/session · 4 weeks<br>Gym · Strength + Cardio · Fat Loss</p>
+  <h1>Your <span>2-Hour</span><br>Gym Workout Plan</h1>
+  <p class="hero-sub">A structured, full-body weekly split optimised for strength, hypertrophy & conditioning — with warm-up, training, cardio & cooldown every session.</p>
   <div class="hero-stats">
-    <div class="hstat"><div class="hstat-val">4</div><div class="hstat-lbl">Weeks</div></div>
-    <div class="hstat"><div class="hstat-val">5</div><div class="hstat-lbl">Days/wk</div></div>
-    <div class="hstat"><div class="hstat-val">20</div><div class="hstat-lbl">Sessions</div></div>
-    <div class="hstat"><div class="hstat-val">~5kg</div><div class="hstat-lbl">Goal</div></div>
+    <div class="hstat"><div class="hstat-val">120</div><div class="hstat-lbl">Min/Day</div></div>
+    <div class="hstat"><div class="hstat-val">5</div><div class="hstat-lbl">Days/Wk</div></div>
+    <div class="hstat"><div class="hstat-val">6+</div><div class="hstat-lbl">Exercises</div></div>
+    <div class="hstat"><div class="hstat-val">PPL</div><div class="hstat-lbl">Split</div></div>
+  </div>
+
+  <!-- Timeline bar -->
+  <div class="timeline-bar">
+    <div class="tl-title">Daily 2-Hour Breakdown</div>
+    <div class="tl-track">
+      <div class="tl-seg" style="width:12.5%; background:var(--amber); opacity:0.85;"></div>
+      <div class="tl-seg" style="width:58.5%; background:var(--green); opacity:0.85;"></div>
+      <div class="tl-seg" style="width:20.8%; background:var(--red); opacity:0.75;"></div>
+      <div class="tl-seg" style="width:8.3%; background:var(--blue); opacity:0.75;"></div>
+    </div>
+    <div class="tl-labels">
+      <span class="tl-lbl">0:00</span>
+      <span class="tl-lbl">0:15</span>
+      <span class="tl-lbl">1:25</span>
+      <span class="tl-lbl">1:50</span>
+      <span class="tl-lbl">2:00</span>
+    </div>
+    <div class="tl-legend">
+      <div class="tl-leg-item"><div class="tl-leg-dot" style="background:var(--amber)"></div>Warm-up 15m</div>
+      <div class="tl-leg-item"><div class="tl-leg-dot" style="background:var(--green)"></div>Strength 70m</div>
+      <div class="tl-leg-item"><div class="tl-leg-dot" style="background:var(--red)"></div>Cardio 25m</div>
+      <div class="tl-leg-item"><div class="tl-leg-dot" style="background:var(--blue)"></div>Cooldown 10m</div>
+    </div>
   </div>
 </div>
 
-<div class="week-nav">
-  <button class="wnav-btn active" onclick="showWeek(0)">Week 1 — Foundation</button>
-  <button class="wnav-btn" onclick="showWeek(1)">Week 2 — Volume</button>
-  <button class="wnav-btn" onclick="showWeek(2)">Week 3 — Intensity</button>
-  <button class="wnav-btn" onclick="showWeek(3)">Week 4 — Peak Cut</button>
+<!-- WEEKLY OVERVIEW GRID -->
+<div class="schedule-grid">
+  <div class="sched-cell" onclick="showDay(0)">
+    <div class="sched-day">Monday</div>
+    <div class="sched-name">Push</div>
+    <div class="sched-chip">Chest · Shoulders · Triceps</div>
+  </div>
+  <div class="sched-cell" onclick="showDay(1)">
+    <div class="sched-day">Tuesday</div>
+    <div class="sched-name">Pull</div>
+    <div class="sched-chip">Back · Biceps · Rear Delt</div>
+  </div>
+  <div class="sched-cell" onclick="showDay(2)">
+    <div class="sched-day">Wednesday</div>
+    <div class="sched-name">Legs</div>
+    <div class="sched-chip">Quads · Hamstrings · Calves</div>
+  </div>
+  <div class="sched-cell" onclick="showDay(3)">
+    <div class="sched-day">Thursday</div>
+    <div class="sched-name">Push+</div>
+    <div class="sched-chip">Shoulders · Arms</div>
+  </div>
+  <div class="sched-cell" onclick="showDay(4)">
+    <div class="sched-day">Friday</div>
+    <div class="sched-name">Pull+</div>
+    <div class="sched-chip">Back · Deadlift · Biceps</div>
+  </div>
+  <div class="sched-cell sched-rest">
+    <div class="sched-day">Sat–Sun</div>
+    <div class="sched-name">Rest 😴</div>
+    <div class="sched-chip">Active recovery</div>
+  </div>
 </div>
 
+<!-- DAY NAV -->
+<div class="day-nav">
+  <button class="dnav-btn active" onclick="showDay(0)">Mon · Push</button>
+  <button class="dnav-btn" onclick="showDay(1)">Tue · Pull</button>
+  <button class="dnav-btn" onclick="showDay(2)">Wed · Legs</button>
+  <button class="dnav-btn" onclick="showDay(3)">Thu · Push+</button>
+  <button class="dnav-btn" onclick="showDay(4)">Fri · Pull+</button>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     DAY 1 — PUSH (Chest · Shoulders · Triceps)
+     ════════════════════════════════════════════════ -->
 <div class="content">
 
-  <!-- WEEK 1 -->
-  <div class="week-content active" id="week-0">
-    <h2 class="week-label">Week 1 — Foundation</h2>
-    <p class="week-desc">Moderate weights, perfect form, building the base. 3–4 sets per exercise.</p>
-    <div class="day-cards">
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left">
-            <div class="day-dot">MON</div>
-            <div>
-              <div class="day-name">Chest + Triceps</div>
-              <div class="day-muscles">6 exercises · 20 min cardio</div>
-            </div>
-          </div>
-          <div class="day-right">
-            <div class="cardio-chip">Cardio</div>
-            <div class="chevron"></div>
-          </div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Flat Barbell Bench Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Incline Dumbbell Press</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Pec Deck / Cable Fly</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Dips (BW or assisted)</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Overhead Tricep Extension</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Tricep Pushdown</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Steady-state walk</span><span>20 min @ 6 km/h</span></div>
-          </div>
-        </div>
+<div class="day-pane active" id="day-0">
+  <div class="day-intro">
+    <div class="day-intro-row">
+      <div class="day-icon">🏋️</div>
+      <div class="day-intro-text">
+        <h2>Monday — Push</h2>
+        <p>Chest, Shoulders & Triceps. Prioritise compound presses first while you're fresh, then isolate. Finish with HIIT cardio.</p>
       </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left">
-            <div class="day-dot">TUE</div>
-            <div>
-              <div class="day-name">Back + Biceps</div>
-              <div class="day-muscles">6 exercises · 15 min cardio</div>
-            </div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Deadlift</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
-              <tr><td>Barbell Bent-over Row</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Lat Pulldown</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Seated Cable Row</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Barbell Curl</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Hammer Curl</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Stationary bike</span><span>15 min moderate</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left">
-            <div class="day-dot">WED</div>
-            <div>
-              <div class="day-name">Shoulders + Abs</div>
-              <div class="day-muscles">6 exercises · 20 min LISS</div>
-            </div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Overhead Barbell Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Dumbbell Lateral Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Face Pulls</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Front Raise</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Cable Crunch</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">45s</span></td></tr>
-              <tr><td>Plank</td><td><span class="vol-badge">3×45s</span></td><td><span class="rest-badge">45s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Incline treadmill walk</span><span>20 min @ 4% incline</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left">
-            <div class="day-dot">THU</div>
-            <div>
-              <div class="day-name">Legs — Quad Focus</div>
-              <div class="day-muscles">5 exercises · 15 min HIIT</div>
-            </div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Barbell Squat</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">2 min</span></td></tr>
-              <tr><td>Leg Press</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Leg Extension</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Walking Lunges</td><td><span class="vol-badge">3×12/leg</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Standing Calf Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 HIIT Finisher</div>
-            <div class="cardio-row"><span>Treadmill sprints</span><span>30s on / 60s walk × 10</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left">
-            <div class="day-dot">FRI</div>
-            <div>
-              <div class="day-name">Legs — Ham + Glute</div>
-              <div class="day-muscles">5 exercises · 20 min steady</div>
-            </div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Romanian Deadlift</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Lying Leg Curl</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Hip Thrust</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Goblet / Sumo Squat</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Seated Calf Raise</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Elliptical</span><span>20 min moderate resistance</span></div>
-          </div>
-        </div>
-      </div>
-
+    </div>
+    <div class="day-chips">
+      <span class="chip chip-amber">Warm-up 15m</span>
+      <span class="chip chip-green">Strength 70m</span>
+      <span class="chip chip-red">HIIT 25m</span>
+      <span class="chip chip-blue">Cooldown 10m</span>
     </div>
   </div>
 
-  <!-- WEEK 2 -->
-  <div class="week-content" id="week-1">
-    <h2 class="week-label">Week 2 — Volume</h2>
-    <p class="week-desc">Add one extra set per compound lift. Push cardio duration up by 5 min.</p>
-    <div class="day-cards">
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">MON</div>
-            <div><div class="day-name">Chest + Triceps</div><div class="day-muscles">6 exercises · 25 min cardio</div></div>
+  <!-- WARM-UP -->
+  <div class="phase phase-warmup open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔥</div>
+      <div class="phase-header-text">
+        <div class="phase-name">Warm-Up</div>
+        <div class="phase-meta">Get blood flowing · protect joints</div>
+      </div>
+      <span class="phase-time-badge">15 min</span>
+      <div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=180&h=120&fit=crop&auto=format" alt="treadmill"><div class="ex-img-overlay"></div><div class="ex-img-label">Cardio</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Brisk Walk / Light Jog</div>
+            <div class="ex-tip">Treadmill at 6–7 km/h. Elevate heart rate gradually. Breathe through your nose.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">5 min</span></div>
           </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
         </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Flat Barbell Bench Press</td><td><span class="vol-badge">5×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Incline Dumbbell Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Cable Fly (low to high)</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Close-grip Bench Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Skull Crushers</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Rope Pushdown</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Incline treadmill walk</span><span>25 min @ 6% incline</span></div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=180&h=120&fit=crop&auto=format" alt="arm circles"><div class="ex-img-overlay"></div><div class="ex-img-label">Mobility</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Arm Circles + Shoulder Rolls</div>
+            <div class="ex-tip">10 forward + 10 backward each. Full range, slow and controlled. Loosens the rotator cuff.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">2×20</span></div>
+          </div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=180&h=120&fit=crop&auto=format" alt="pushup"><div class="ex-img-overlay"></div><div class="ex-img-label">Activation</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Push-up (Bodyweight)</div>
+            <div class="ex-tip">Activate chest and triceps before loading. Keep core tight, elbows 45° from body.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">2×15</span></div>
+          </div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=180&h=120&fit=crop&auto=format" alt="band pull"><div class="ex-img-overlay"></div><div class="ex-img-label">Activation</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Band Pull-Apart</div>
+            <div class="ex-tip">Keep arms straight, pull band to chest level. Critical for rear-delt health on push days.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">3×15</span></div>
           </div>
         </div>
       </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">TUE</div>
-            <div><div class="day-name">Back + Biceps</div><div class="day-muscles">6 exercises · 20 min cardio</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Deadlift</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
-              <tr><td>T-Bar Row</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Wide-grip Pull-up / Assisted</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Single-arm DB Row</td><td><span class="vol-badge">3×12/side</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>EZ-Bar Curl</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Incline DB Curl</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Stationary bike</span><span>20 min moderate-high</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">WED</div>
-            <div><div class="day-name">Shoulders + Abs</div><div class="day-muscles">6 exercises · 25 min LISS</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Seated DB Shoulder Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Arnold Press</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Cable Lateral Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Rear Delt Fly (machine)</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Hanging Leg Raise</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">45s</span></td></tr>
-              <tr><td>Russian Twists</td><td><span class="vol-badge">3×20</span></td><td><span class="rest-badge">45s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Incline treadmill walk</span><span>25 min @ 5% incline</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">THU</div>
-            <div><div class="day-name">Legs — Quad Focus</div><div class="day-muscles">5 exercises · 20 min HIIT</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Barbell Squat</td><td><span class="vol-badge">5×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
-              <tr><td>Hack Squat</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Leg Extension (drop set)</td><td><span class="vol-badge">3×12+drop</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Bulgarian Split Squat</td><td><span class="vol-badge">3×10/leg</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Standing Calf Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 HIIT Finisher</div>
-            <div class="cardio-row"><span>Treadmill sprints</span><span>40s on / 60s walk × 12</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">FRI</div>
-            <div><div class="day-name">Legs — Ham + Glute</div><div class="day-muscles">5 exercises · 25 min steady</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Romanian Deadlift</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Seated Leg Curl</td><td><span class="vol-badge">4×12</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Hip Thrust (barbell)</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Step-ups with DB</td><td><span class="vol-badge">3×12/leg</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Seated Calf Raise</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Elliptical</span><span>25 min moderate-high resistance</span></div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
-  <!-- WEEK 3 -->
-  <div class="week-content" id="week-2">
-    <h2 class="week-label">Week 3 — Intensity</h2>
-    <p class="week-desc">Heavier loads, lower reps on compounds. Cardio starts hitting harder.</p>
-    <div class="day-cards">
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">MON</div>
-            <div><div class="day-name">Chest + Triceps</div><div class="day-muscles">6 exercises · 25 min LISS</div></div>
+  <!-- STRENGTH -->
+  <div class="phase phase-strength open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">💪</div>
+      <div class="phase-header-text">
+        <div class="phase-name">Strength Training</div>
+        <div class="phase-meta">6 exercises · progressive overload</div>
+      </div>
+      <span class="phase-time-badge">70 min</span>
+      <div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=180&h=120&fit=crop&auto=format" alt="bench press"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Flat Barbell Bench Press</div>
+            <div class="ex-tip">Primary chest mover. Lower bar to nipple line. Drive feet into floor. 3-sec eccentric for tension.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">4×6–8</span><span class="ex-badge badge-rest">Rest 2 min</span><span class="ex-badge badge-tip">⚡ Main lift</span></div>
           </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
         </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Flat Barbell Bench Press</td><td><span class="vol-badge">5×8</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Incline DB Press</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Decline Bench Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Weighted Dips</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Close-grip Bench Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Cable Overhead Tricep Ext</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Incline walk</span><span>25 min @ 7%, 5.5 km/h</span></div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=180&h=120&fit=crop&auto=format" alt="incline press"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Incline DB Press (30–45°)</div>
+            <div class="ex-tip">Targets upper chest. Don't go too steep — 30° is ideal. Full stretch at bottom, squeeze at top.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">4×8–10</span><span class="ex-badge badge-rest">Rest 90s</span></div>
+          </div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=180&h=120&fit=crop&auto=format" alt="overhead press"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Seated DB Overhead Press</div>
+            <div class="ex-tip">Braced core, slight arch. Dumbbells give better range than barbell. Lower to ear level.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">4×8–10</span><span class="ex-badge badge-rest">Rest 90s</span></div>
+          </div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1598971639058-fab3c3109a73?w=180&h=120&fit=crop&auto=format" alt="cable fly"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Cable Chest Fly (Low-to-High)</div>
+            <div class="ex-tip">Set cables low. Keep slight bend in elbows. Peak squeeze at top. Excellent for inner chest.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">3×12–15</span><span class="ex-badge badge-rest">Rest 60s</span></div>
+          </div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=180&h=120&fit=crop&auto=format" alt="lateral raise"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Lateral Raise (DB or Cable)</div>
+            <div class="ex-tip">Lean slightly forward. Lead with elbow, not wrist. Stop at shoulder height. 2-sec hold at top.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">4×15</span><span class="ex-badge badge-rest">Rest 60s</span></div>
+          </div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1603287681836-b174ce5074c2?w=180&h=120&fit=crop&auto=format" alt="tricep pushdown"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info">
+            <div class="ex-name">Rope Tricep Pushdown + Overhead Extension</div>
+            <div class="ex-tip">Superset these two. Rope gives more tricep stretch. OH extension hits the long head. Short rest between pairs.</div>
+            <div class="ex-badges"><span class="ex-badge badge-vol">3×12+12</span><span class="ex-badge badge-rest">Rest 90s</span><span class="ex-badge badge-tip">Superset</span></div>
           </div>
         </div>
       </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">TUE</div>
-            <div><div class="day-name">Back + Biceps</div><div class="day-muscles">6 exercises · 20 min HIIT</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Weighted Pull-up</td><td><span class="vol-badge">4×6–8</span></td><td><span class="rest-badge">2 min</span></td></tr>
-              <tr><td>Barbell Row (heavy)</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Meadows Row</td><td><span class="vol-badge">3×10/side</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Straight-arm Pulldown</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Barbell Preacher Curl</td><td><span class="vol-badge">4×10</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Cable Curl</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 HIIT Finisher</div>
-            <div class="cardio-row"><span>Bike HIIT</span><span>30s max / 90s easy × 10</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">WED</div>
-            <div><div class="day-name">Shoulders + Abs</div><div class="day-muscles">6 exercises · 25 min LISS</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Standing Barbell OHP</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Lateral + Front Raise superset</td><td><span class="vol-badge">4×12+12</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Cable Face Pull</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Shrugs</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Cable Crunch (heavy)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">45s</span></td></tr>
-              <tr><td>Ab Wheel Rollout</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">45s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Treadmill incline walk</span><span>25 min @ 6% incline</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">THU</div>
-            <div><div class="day-name">Legs — Quad Focus</div><div class="day-muscles">5 exercises · 20 min HIIT</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Barbell Back Squat</td><td><span class="vol-badge">5×6</span></td><td><span class="rest-badge">2 min</span></td></tr>
-              <tr><td>Front Squat</td><td><span class="vol-badge">3×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
-              <tr><td>Leg Press (high vol)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Leg Extension</td><td><span class="vol-badge">3×12</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Calf Raise superset</td><td><span class="vol-badge">4×15+15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 HIIT Finisher</div>
-            <div class="cardio-row"><span>Stairmaster HIIT</span><span>1 min fast / 1 min slow × 10</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">FRI</div>
-            <div><div class="day-name">Legs — Ham + Glute</div><div class="day-muscles">5 exercises · 30 min steady</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Sumo Deadlift</td><td><span class="vol-badge">4×8</span></td><td><span class="rest-badge">2 min</span></td></tr>
-              <tr><td>Nordic Hamstring Curl</td><td><span class="vol-badge">3×8</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Hip Thrust (heavy)</td><td><span class="vol-badge">5×10</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Reverse Lunge</td><td><span class="vol-badge">3×10/leg</span></td><td><span class="rest-badge">75s</span></td></tr>
-              <tr><td>Calf Raise machine</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Elliptical</span><span>30 min, last 10 min high resistance</span></div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
-  <!-- WEEK 4 -->
-  <div class="week-content" id="week-3">
-    <h2 class="week-label">Week 4 — Peak Cut</h2>
-    <p class="week-desc">Lighter weights, higher reps, shorter rest. Maximum fat burn before May 10.</p>
-    <div class="day-cards">
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">MON</div>
-            <div><div class="day-name">Chest + Triceps</div><div class="day-muscles">5 exercises · 30 min HIIT</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Flat DB Bench (lighter, faster)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Incline Cable Fly</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Push-up (weighted vest)</td><td><span class="vol-badge">3×20</span></td><td><span class="rest-badge">45s</span></td></tr>
-              <tr><td>Tricep Dips</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Rope Pushdown + OH Ext superset</td><td><span class="vol-badge">3×12+12</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 HIIT Finisher</div>
-            <div class="cardio-row"><span>Treadmill HIIT</span><span>45s sprint / 45s walk × 15</span></div>
-          </div>
-        </div>
+  <!-- CARDIO -->
+  <div class="phase phase-cardio open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔴</div>
+      <div class="phase-header-text">
+        <div class="phase-name">HIIT Cardio</div>
+        <div class="phase-meta">Max fat burn · post-strength is optimal</div>
       </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">TUE</div>
-            <div><div class="day-name">Back + Biceps</div><div class="day-muscles">5 exercises · 30 min LISS</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Pull-up (max reps)</td><td><span class="vol-badge">4×max</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Seated Cable Row</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Lat Pulldown (wide)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Face Pull</td><td><span class="vol-badge">3×20</span></td><td><span class="rest-badge">45s</span></td></tr>
-              <tr><td>DB Curl + Hammer Curl superset</td><td><span class="vol-badge">3×12+12</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Incline walk</span><span>30 min @ 8% incline</span></div>
-          </div>
-        </div>
+      <span class="phase-time-badge">25 min</span>
+      <div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cardio-block">
+        <div class="cardio-title">🔥 HIIT Protocol — Treadmill / Bike</div>
+        <div class="cardio-item"><div class="cardio-emoji">🚶</div><div><div class="cardio-label">Warm-in (Walk)</div><div class="cardio-detail">5 min @ comfortable pace · ease into it</div></div></div>
+        <div class="cardio-item"><div class="cardio-emoji">🔁</div><div><div class="cardio-label">Sprint Intervals × 10 rounds</div><div class="cardio-detail">40s all-out sprint → 40s slow walk · no stopping between rounds</div></div></div>
+        <div class="cardio-item"><div class="cardio-emoji">🧊</div><div><div class="cardio-label">Cool-down Walk</div><div class="cardio-detail">5 min slow walk to bring heart rate down before stretching</div></div></div>
+        <div class="cardio-item"><div class="cardio-emoji">💡</div><div><div class="cardio-label">Alternative: Rowing Ergometer</div><div class="cardio-detail">25 min at moderate intensity — easier on legs after chest day</div></div></div>
       </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">WED</div>
-            <div><div class="day-name">Shoulders + Abs</div><div class="day-muscles">4 exercises · 30 min HIIT</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>DB Shoulder Press circuit</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Cable Lateral Raise</td><td><span class="vol-badge">4×20</span></td><td><span class="rest-badge">45s</span></td></tr>
-              <tr><td>Rear Delt Fly</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">45s</span></td></tr>
-              <tr><td>Full Core Circuit (4 moves)</td><td><span class="vol-badge">4×15 each</span></td><td><span class="rest-badge">30s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 HIIT Finisher</div>
-            <div class="cardio-row"><span>Stairmaster / Elliptical HIIT</span><span>30 min alternating 2 min high/low</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">THU</div>
-            <div><div class="day-name">Full Legs — Circuit</div><div class="day-muscles">5 exercises · 30 min HIIT</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">HIIT</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Squat to Press (DB)</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Leg Press (high rep)</td><td><span class="vol-badge">4×20</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Romanian Deadlift</td><td><span class="vol-badge">4×15</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Walking Lunges</td><td><span class="vol-badge">3×20/leg</span></td><td><span class="rest-badge">60s</span></td></tr>
-              <tr><td>Jump Squat</td><td><span class="vol-badge">3×15</span></td><td><span class="rest-badge">45s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 HIIT Finisher</div>
-            <div class="cardio-row"><span>Bike HIIT</span><span>40s max / 40s easy × 15</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="day-card" onclick="toggleDay(this)">
-        <div class="day-header">
-          <div class="day-left"><div class="day-dot">FRI</div>
-            <div><div class="day-name">Full Body Power</div><div class="day-muscles">5 exercises · 30 min steady</div></div>
-          </div>
-          <div class="day-right"><div class="cardio-chip">Cardio</div><div class="chevron"></div></div>
-        </div>
-        <div class="exercise-body">
-          <table class="ex-table">
-            <thead><tr><th>Exercise</th><th>Sets×Reps</th><th>Rest</th></tr></thead>
-            <tbody>
-              <tr><td>Deadlift (moderate)</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Bench Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Pull-up or Lat Pulldown</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Overhead Press</td><td><span class="vol-badge">3×10</span></td><td><span class="rest-badge">90s</span></td></tr>
-              <tr><td>Farmer's Carry</td><td><span class="vol-badge">3×40m</span></td><td><span class="rest-badge">60s</span></td></tr>
-            </tbody>
-          </table>
-          <div class="cardio-box">
-            <div class="cardio-box-title">🔥 Cardio Finisher</div>
-            <div class="cardio-row"><span>Steady-state jog</span><span>30 min comfortable pace</span></div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 
-  <!-- Tips -->
-  <div class="tips-section">
-    <div class="tips-title">Key Tips for Wedding Prep</div>
-    <div class="tip-item">
-      <div class="tip-icon">💧</div>
-      <div class="tip-text">Drink 3–4 litres of water daily, especially on leg days. Hydration directly impacts fat metabolism.</div>
+  <!-- COOLDOWN -->
+  <div class="phase phase-cooldown open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🧊</div>
+      <div class="phase-header-text">
+        <div class="phase-name">Cooldown & Stretch</div>
+        <div class="phase-meta">Reduce DOMS · improve flexibility</div>
+      </div>
+      <span class="phase-time-badge">10 min</span>
+      <div class="phase-chevron"></div>
     </div>
-    <div class="tip-item">
-      <div class="tip-icon">🥗</div>
-      <div class="tip-text">Target ~150–160g protein/day (chicken, eggs, paneer, dal). Aim for a 400–500 cal daily deficit.</div>
+    <div class="phase-body">
+      <div class="cooldown-block">
+        <div class="cooldown-item"><div class="cardio-emoji">🙆</div><div><div class="cooldown-label">Doorway Chest Stretch</div><div class="cooldown-detail">Hold 30s each side — open tight pec fibres after pressing</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">🤸</div><div><div class="cooldown-label">Cross-Body Shoulder Stretch</div><div class="cooldown-detail">30s each side — pull arm across chest, keep shoulder down</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">💪</div><div><div class="cooldown-label">Tricep Overhead Stretch</div><div class="cooldown-detail">Hold 30s each arm — reach behind head, gently press elbow down</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">😮‍💨</div><div><div class="cooldown-label">Deep Breathing / Child's Pose</div><div class="cooldown-detail">2–3 min, 4-sec inhale, 6-sec exhale — activates parasympathetic recovery</div></div></div>
+      </div>
     </div>
-    <div class="tip-item">
-      <div class="tip-icon">😴</div>
-      <div class="tip-text">7–8 hours of sleep is non-negotiable. Most fat loss and muscle repair happens during deep sleep.</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     DAY 2 — PULL (Back · Biceps · Rear Delt)
+     ════════════════════════════════════════════════ -->
+<div class="day-pane" id="day-1">
+  <div class="day-intro">
+    <div class="day-intro-row">
+      <div class="day-icon">🦅</div>
+      <div class="day-intro-text">
+        <h2>Tuesday — Pull</h2>
+        <p>Back, Biceps & Rear Delts. Focus on mind-muscle connection in your lats. Pull from the elbow, not the hands.</p>
+      </div>
     </div>
-    <div class="tip-item">
-      <div class="tip-icon">📈</div>
-      <div class="tip-text">Track weights every session. Progressive overload (even small increases) is what drives results week-over-week.</div>
-    </div>
-    <div class="tip-item">
-      <div class="tip-icon">🧂</div>
-      <div class="tip-text">The week before May 10: cut sodium and processed foods. You'll look visibly leaner and less bloated on the day.</div>
+    <div class="day-chips">
+      <span class="chip chip-amber">Warm-up 15m</span>
+      <span class="chip chip-green">Strength 70m</span>
+      <span class="chip chip-red">LISS 25m</span>
+      <span class="chip chip-blue">Cooldown 10m</span>
     </div>
   </div>
 
-  <div class="footer">
-    Built for <strong>Vamsi's Wedding Shred</strong> · May 10, 2026 🎉<br>
-    Sat & Sun are rest days — recover fully.
+  <div class="phase phase-warmup open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔥</div>
+      <div class="phase-header-text"><div class="phase-name">Warm-Up</div><div class="phase-meta">Shoulder mobility · scapular prep</div></div>
+      <span class="phase-time-badge">15 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=180&h=120&fit=crop&auto=format" alt="row machine"><div class="ex-img-overlay"></div><div class="ex-img-label">Cardio</div></div>
+          <div class="ex-info"><div class="ex-name">Rowing Machine</div><div class="ex-tip">Moderate pace. Keep back upright and drive with legs first. Perfect warm-up for pull day.</div><div class="ex-badges"><span class="ex-badge badge-vol">5 min</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=180&h=120&fit=crop&auto=format" alt="scapular pull"><div class="ex-img-overlay"></div><div class="ex-img-label">Activation</div></div>
+          <div class="ex-info"><div class="ex-name">Scapular Pull-up (Dead Hang)</div><div class="ex-tip">Hang from bar. Retract and depress shoulder blades without bending elbows. Activates deep back muscles.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×10</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=180&h=120&fit=crop&auto=format" alt="cat cow"><div class="ex-img-overlay"></div><div class="ex-img-label">Mobility</div></div>
+          <div class="ex-info"><div class="ex-name">Cat-Cow + Thoracic Rotation</div><div class="ex-tip">On all fours. Alternate arch and round. Then thread needle each side. Opens thoracic spine for big rows.</div><div class="ex-badges"><span class="ex-badge badge-vol">10 each</span></div></div>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <div class="phase phase-strength open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">💪</div>
+      <div class="phase-header-text"><div class="phase-name">Strength Training</div><div class="phase-meta">6 exercises · back width & thickness</div></div>
+      <span class="phase-time-badge">70 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=180&h=120&fit=crop&auto=format" alt="pull up"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Weighted Pull-up (or Lat Pulldown)</div><div class="ex-tip">Best lat width builder. Full dead hang to chin over bar. Use a belt if bodyweight becomes easy.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×6–8</span><span class="ex-badge badge-rest">Rest 2 min</span><span class="ex-badge badge-tip">⚡ Main lift</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=180&h=120&fit=crop&auto=format" alt="barbell row"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Barbell Bent-Over Row</div><div class="ex-tip">Hinge to 45°, brace hard. Drive elbows back and down. Touch bar to lower sternum. Don't jerk.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×6–8</span><span class="ex-badge badge-rest">Rest 2 min</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=180&h=120&fit=crop&auto=format" alt="seated cable row"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Seated Cable Row (Close Grip)</div><div class="ex-tip">Keep torso upright throughout. Full stretch forward, full row back with elbow tucked. 2-sec hold.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×10–12</span><span class="ex-badge badge-rest">Rest 90s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1598971639058-fab3c3109a73?w=180&h=120&fit=crop&auto=format" alt="single arm row"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Single-Arm DB Row</div><div class="ex-tip">Brace on bench. Let weight stretch lat fully at bottom. Row elbow past torso. Great for fixing imbalances.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×12 each</span><span class="ex-badge badge-rest">Rest 60s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=180&h=120&fit=crop&auto=format" alt="face pull"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Face Pull (Rope, High Pulley)</div><div class="ex-tip">Pull to forehead level, elbows high and out. Crucial for rear delt and rotator cuff health. Never skip this.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×15–20</span><span class="ex-badge badge-rest">Rest 45s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1603287681836-b174ce5074c2?w=180&h=120&fit=crop&auto=format" alt="bicep curl"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">DB Curl + Hammer Curl Superset</div><div class="ex-tip">DB curls hit bicep peak; hammers hit brachialis for arm thickness. Don't swing — strict form only.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×10+10</span><span class="ex-badge badge-rest">Rest 90s</span><span class="ex-badge badge-tip">Superset</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-cardio open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔴</div>
+      <div class="phase-header-text"><div class="phase-name">LISS Cardio</div><div class="phase-meta">Low intensity · active recovery · fat burn</div></div>
+      <span class="phase-time-badge">25 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cardio-block">
+        <div class="cardio-title">🚶 Incline Walk / Elliptical</div>
+        <div class="cardio-item"><div class="cardio-emoji">📐</div><div><div class="cardio-label">Incline Treadmill Walk</div><div class="cardio-detail">8–10% incline · 5.5 km/h · 25 min straight — burns fat without taxing CNS</div></div></div>
+        <div class="cardio-item"><div class="cardio-emoji">🔄</div><div><div class="cardio-label">Alternative: Elliptical</div><div class="cardio-detail">Moderate resistance, focus on pushing and pulling the handles to keep back muscles engaged</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-cooldown open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🧊</div>
+      <div class="phase-header-text"><div class="phase-name">Cooldown & Stretch</div><div class="phase-meta">Back & bicep recovery</div></div>
+      <span class="phase-time-badge">10 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cooldown-block">
+        <div class="cooldown-item"><div class="cardio-emoji">🙆</div><div><div class="cooldown-label">Lat Stretch (Overhead Side Bend)</div><div class="cooldown-detail">Hold bar or wall, lean sideways — 30s each side. You'll feel the entire lat release.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">🤸</div><div><div class="cooldown-label">Bicep Wall Stretch</div><div class="cooldown-detail">Palm flat on wall, arm extended. Rotate body away gently — 30s each arm.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">😮‍💨</div><div><div class="cooldown-label">Child's Pose + Thread the Needle</div><div class="cooldown-detail">3 min combined — releases lower back and thoracic spine compressed during rowing.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     DAY 3 — LEGS
+     ════════════════════════════════════════════════ -->
+<div class="day-pane" id="day-2">
+  <div class="day-intro">
+    <div class="day-intro-row">
+      <div class="day-icon">🦵</div>
+      <div class="day-intro-text">
+        <h2>Wednesday — Legs</h2>
+        <p>Quads, Hamstrings, Glutes & Calves. The hardest session. Never skip legs — they drive metabolism and posture.</p>
+      </div>
+    </div>
+    <div class="day-chips">
+      <span class="chip chip-amber">Warm-up 15m</span>
+      <span class="chip chip-green">Strength 70m</span>
+      <span class="chip chip-red">Cardio 25m</span>
+      <span class="chip chip-blue">Cooldown 10m</span>
+    </div>
+  </div>
+
+  <div class="phase phase-warmup open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔥</div>
+      <div class="phase-header-text"><div class="phase-name">Warm-Up</div><div class="phase-meta">Hip mobility · glute activation</div></div>
+      <span class="phase-time-badge">15 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=180&h=120&fit=crop&auto=format" alt="bike"><div class="ex-img-overlay"></div><div class="ex-img-label">Cardio</div></div>
+          <div class="ex-info"><div class="ex-name">Stationary Bike</div><div class="ex-tip">Medium resistance, full pedal stroke. Warms knee joints and hip flexors gently before heavy squats.</div><div class="ex-badges"><span class="ex-badge badge-vol">5 min</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=180&h=120&fit=crop&auto=format" alt="hip circle"><div class="ex-img-overlay"></div><div class="ex-img-label">Mobility</div></div>
+          <div class="ex-info"><div class="ex-name">Hip Circles + 90/90 Hip Stretch</div><div class="ex-tip">10 circles each direction. Then sit in 90/90 position for 30s per side. Opens hip capsule before loading.</div><div class="ex-badges"><span class="ex-badge badge-vol">2 rounds</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=180&h=120&fit=crop&auto=format" alt="glute bridge"><div class="ex-img-overlay"></div><div class="ex-img-label">Activation</div></div>
+          <div class="ex-info"><div class="ex-name">Glute Bridge + Banded Clamshell</div><div class="ex-tip">Activate glutes before squats or they won't fire properly. 20 bridges + 15 clamshells each side.</div><div class="ex-badges"><span class="ex-badge badge-vol">2×20 / 2×15</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=180&h=120&fit=crop&auto=format" alt="goblet squat"><div class="ex-img-overlay"></div><div class="ex-img-label">Activation</div></div>
+          <div class="ex-info"><div class="ex-name">Goblet Squat (Light DB)</div><div class="ex-tip">2 sets with light weight — groove squat pattern before loading barbell. Keep chest tall, knees out.</div><div class="ex-badges"><span class="ex-badge badge-vol">2×12</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-strength open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">💪</div>
+      <div class="phase-header-text"><div class="phase-name">Strength Training</div><div class="phase-meta">6 exercises · quads · hams · calves</div></div>
+      <span class="phase-time-badge">70 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=180&h=120&fit=crop&auto=format" alt="squat"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Barbell Back Squat</div><div class="ex-tip">King of all exercises. Brace 360°, knees track over toes, break parallel. Do NOT lift heels — fix ankle mobility first.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×5–6</span><span class="ex-badge badge-rest">Rest 2–3 min</span><span class="ex-badge badge-tip">⚡ Main lift</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=180&h=120&fit=crop&auto=format" alt="leg press"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Leg Press (High Foot Placement)</div><div class="ex-tip">High feet = more glute/ham. Lower feet = quads. Don't lock knees at top. Full ROM on every rep.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×10–12</span><span class="ex-badge badge-rest">Rest 90s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=180&h=120&fit=crop&auto=format" alt="romanian deadlift"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Romanian Deadlift (RDL)</div><div class="ex-tip">Hinge at hips, soft knees. Lower bar along shins feeling hamstring stretch. Drive hips forward to stand.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×10</span><span class="ex-badge badge-rest">Rest 90s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1598971639058-fab3c3109a73?w=180&h=120&fit=crop&auto=format" alt="leg curl"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Seated Leg Curl</div><div class="ex-tip">Seated is superior to lying — greater hamstring stretch under load. Full ROM, slow lowering.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×12–15</span><span class="ex-badge badge-rest">Rest 60s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=180&h=120&fit=crop&auto=format" alt="walking lunge"><div class="ex-img-overlay"></div><div class="ex-img-label">Functional</div></div>
+          <div class="ex-info"><div class="ex-name">Walking Lunges (DB)</div><div class="ex-tip">Long stride hits glutes more, short stride hits quads. Keep torso vertical. Don't let knee cave in.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×16 steps</span><span class="ex-badge badge-rest">Rest 90s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1603287681836-b174ce5074c2?w=180&h=120&fit=crop&auto=format" alt="calf raise"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Standing Calf Raise + Seated Calf Raise</div><div class="ex-tip">Standing = gastrocnemius (outer). Seated = soleus (inner). Train both. Full heel drop, full toe rise. 2-sec pause.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×15 each</span><span class="ex-badge badge-rest">Rest 45s</span><span class="ex-badge badge-tip">Superset</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-cardio open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔴</div>
+      <div class="phase-header-text"><div class="phase-name">Cardio Finisher</div><div class="phase-meta">Moderate intensity — legs are already fatigued</div></div>
+      <span class="phase-time-badge">25 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cardio-block">
+        <div class="cardio-title">🚴 Moderate Bike / Elliptical</div>
+        <div class="cardio-item"><div class="cardio-emoji">🚴</div><div><div class="cardio-label">Stationary Bike — Moderate</div><div class="cardio-detail">Level 8–10, 70–80 RPM, 25 min. Flush lactic acid from legs while keeping heart rate up.</div></div></div>
+        <div class="cardio-item"><div class="cardio-emoji">💡</div><div><div class="cardio-label">Don't do HIIT on leg day</div><div class="cardio-detail">Your quads and hamstrings need blood flow, not more explosive stress. Keep it aerobic.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-cooldown open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🧊</div>
+      <div class="phase-header-text"><div class="phase-name">Cooldown & Stretch</div><div class="phase-meta">Essential on leg day — reduce DOMS</div></div>
+      <span class="phase-time-badge">10 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cooldown-block">
+        <div class="cooldown-item"><div class="cardio-emoji">🦵</div><div><div class="cooldown-label">Quad Stretch (Standing or Lying)</div><div class="cooldown-detail">30s each leg — pull heel to glute. Feel the quad belly release.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">🤸</div><div><div class="cooldown-label">Hamstring Stretch (Seated or PNF)</div><div class="cooldown-detail">30s each leg — flex foot, hinge forward from hip. Don't round spine.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">🙆</div><div><div class="cooldown-label">Pigeon Pose (Hip Flexor + Glute)</div><div class="cooldown-detail">60s each side — best stretch for post-squat hip tightness.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">🦶</div><div><div class="cooldown-label">Calf Stretch on Wall / Step</div><div class="cooldown-detail">30s each leg — heel drop off step edge, straight and bent knee versions.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     DAY 4 — PUSH+ (Shoulders · Arms)
+     ════════════════════════════════════════════════ -->
+<div class="day-pane" id="day-3">
+  <div class="day-intro">
+    <div class="day-intro-row">
+      <div class="day-icon">🎯</div>
+      <div class="day-intro-text">
+        <h2>Thursday — Push+</h2>
+        <p>Shoulder & Arm Focus. More volume on delts, triceps, and biceps. Great day for pump training — shorter rest, higher reps.</p>
+      </div>
+    </div>
+    <div class="day-chips">
+      <span class="chip chip-amber">Warm-up 15m</span>
+      <span class="chip chip-green">Strength 70m</span>
+      <span class="chip chip-red">HIIT 25m</span>
+      <span class="chip chip-blue">Cooldown 10m</span>
+    </div>
+  </div>
+
+  <div class="phase phase-warmup open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔥</div>
+      <div class="phase-header-text"><div class="phase-name">Warm-Up</div><div class="phase-meta">Rotator cuff · shoulder joint prep</div></div>
+      <span class="phase-time-badge">15 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=180&h=120&fit=crop&auto=format" alt="elliptical"><div class="ex-img-overlay"></div><div class="ex-img-label">Cardio</div></div>
+          <div class="ex-info"><div class="ex-name">Elliptical / Jump Rope</div><div class="ex-tip">5 min easy. Elevate body temp and get shoulder joints moving before loading overhead.</div><div class="ex-badges"><span class="ex-badge badge-vol">5 min</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=180&h=120&fit=crop&auto=format" alt="band work"><div class="ex-img-overlay"></div><div class="ex-img-label">Activation</div></div>
+          <div class="ex-info"><div class="ex-name">Band External Rotation + YTW</div><div class="ex-tip">Elbow at 90°, rotate outward with band — 15 reps. Then Y-T-W raises lying face-down — 10 reps each shape.</div><div class="ex-badges"><span class="ex-badge badge-vol">2 rounds</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=180&h=120&fit=crop&auto=format" alt="shoulder warm"><div class="ex-img-overlay"></div><div class="ex-img-label">Warm-Up Set</div></div>
+          <div class="ex-info"><div class="ex-name">Light DB Press (50% working weight)</div><div class="ex-tip">2 warm-up sets before working weight. Grooves the pressing pattern and builds synovial fluid in shoulder.</div><div class="ex-badges"><span class="ex-badge badge-vol">2×15</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-strength open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">💪</div>
+      <div class="phase-header-text"><div class="phase-name">Strength Training</div><div class="phase-meta">Shoulders · Triceps · Biceps</div></div>
+      <span class="phase-time-badge">70 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=180&h=120&fit=crop&auto=format" alt="arnold press"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Arnold Press</div><div class="ex-tip">Starts with palms facing you, rotates to facing forward at top. Hits all 3 delt heads in one movement. Iconic.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×8–10</span><span class="ex-badge badge-rest">Rest 90s</span><span class="ex-badge badge-tip">⚡ Main lift</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=180&h=120&fit=crop&auto=format" alt="lateral raise"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Cable Lateral Raise (Both Sides)</div><div class="ex-tip">Cable keeps tension at the bottom — dumbbells don't. Cross-body cable, arm slightly forward. 4×15 each.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×15 each</span><span class="ex-badge badge-rest">Rest 45s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=180&h=120&fit=crop&auto=format" alt="upright row"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Upright Row (EZ Bar or Cable)</div><div class="ex-tip">Wide grip reduces shoulder impingement risk. Pull to chin level, elbows leading. Great for upper traps + mid delt.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×12</span><span class="ex-badge badge-rest">Rest 60s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1598971639058-fab3c3109a73?w=180&h=120&fit=crop&auto=format" alt="skull crusher"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Skull Crusher (EZ Bar)</div><div class="ex-tip">Lower bar to forehead, elbows fixed pointing up. Great long-head tricep builder. Use spotter or dumbbells.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×10</span><span class="ex-badge badge-rest">Rest 90s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=180&h=120&fit=crop&auto=format" alt="dips"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Tricep Dips (Upright Torso)</div><div class="ex-tip">Lean forward = chest. Stay upright = triceps. Lock scapulae down. Add weight via belt when bodyweight is easy.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×max</span><span class="ex-badge badge-rest">Rest 90s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1603287681836-b174ce5074c2?w=180&h=120&fit=crop&auto=format" alt="barbell curl"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Barbell Curl + Incline DB Curl</div><div class="ex-tip">Superset: barbell for strength, incline DB for long head stretch. Don't let upper arm drift forward on incline.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×10+10</span><span class="ex-badge badge-rest">Rest 90s</span><span class="ex-badge badge-tip">Superset</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-cardio open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔴</div>
+      <div class="phase-header-text"><div class="phase-name">HIIT Cardio</div><div class="phase-meta">Metabolic finisher</div></div>
+      <span class="phase-time-badge">25 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cardio-block">
+        <div class="cardio-title">⚡ Stairmaster / Battle Ropes</div>
+        <div class="cardio-item"><div class="cardio-emoji">🪜</div><div><div class="cardio-label">Stairmaster</div><div class="cardio-detail">Level 8–12, 25 min continuous — excellent glute + cardio stimulus without impacting shoulders/arms</div></div></div>
+        <div class="cardio-item"><div class="cardio-emoji">🪢</div><div><div class="cardio-label">Alternative: Battle Ropes</div><div class="cardio-detail">30s max effort · 30s rest × 10 rounds — keeps the arms and shoulders moving in a fresh pattern</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-cooldown open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🧊</div>
+      <div class="phase-header-text"><div class="phase-name">Cooldown & Stretch</div><div class="phase-meta">Shoulder & arm decompression</div></div>
+      <span class="phase-time-badge">10 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cooldown-block">
+        <div class="cooldown-item"><div class="cardio-emoji">🙆</div><div><div class="cooldown-label">Sleeper Stretch (Internal Rotation)</div><div class="cooldown-detail">Lying on side, gently press forearm toward floor — 30s each. Vital for shoulder health.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">🤸</div><div><div class="cooldown-label">Doorway Pec / Bicep Stretch</div><div class="cooldown-detail">Palm on doorway at shoulder height, lean forward — 30s. Releases bicep tendon at shoulder.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">😮‍💨</div><div><div class="cooldown-label">Neck Rolls + Deep Breathing</div><div class="cooldown-detail">Slow neck circles each way, then 3 min box breathing (4-4-4-4) to drop cortisol.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════
+     DAY 5 — PULL+ (Back · Deadlift · Biceps)
+     ════════════════════════════════════════════════ -->
+<div class="day-pane" id="day-4">
+  <div class="day-intro">
+    <div class="day-intro-row">
+      <div class="day-icon">💀</div>
+      <div class="day-intro-text">
+        <h2>Friday — Pull+</h2>
+        <p>Conventional Deadlift is the centrepiece today. Heavy compound strength, then back volume, then bicep finisher. End the week strong.</p>
+      </div>
+    </div>
+    <div class="day-chips">
+      <span class="chip chip-amber">Warm-up 15m</span>
+      <span class="chip chip-green">Strength 70m</span>
+      <span class="chip chip-red">LISS 25m</span>
+      <span class="chip chip-blue">Cooldown 10m</span>
+    </div>
+  </div>
+
+  <div class="phase phase-warmup open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔥</div>
+      <div class="phase-header-text"><div class="phase-name">Warm-Up</div><div class="phase-meta">Hip hinge pattern · spine prep</div></div>
+      <span class="phase-time-badge">15 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1538805060514-97d9cc17730c?w=180&h=120&fit=crop&auto=format" alt="row"><div class="ex-img-overlay"></div><div class="ex-img-label">Cardio</div></div>
+          <div class="ex-info"><div class="ex-name">Rowing Machine / Elliptical</div><div class="ex-tip">5 min easy. Warms up posterior chain which you'll need for deadlifts. Focus on hip extension drive.</div><div class="ex-badges"><span class="ex-badge badge-vol">5 min</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=180&h=120&fit=crop&auto=format" alt="hip hinge"><div class="ex-img-overlay"></div><div class="ex-img-label">Mobility</div></div>
+          <div class="ex-info"><div class="ex-name">Hip Hinge Drill (Dowel Rod / PVC)</div><div class="ex-tip">Hold dowel on spine (3 points of contact). Hinge forward keeping neutral spine — trains deadlift pattern safely.</div><div class="ex-badges"><span class="ex-badge badge-vol">2×10</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=180&h=120&fit=crop&auto=format" alt="deadlift warmup"><div class="ex-img-overlay"></div><div class="ex-img-label">Warm-Up Set</div></div>
+          <div class="ex-info"><div class="ex-name">Deadlift Warm-Up Sets</div><div class="ex-tip">Empty bar × 10 → 50% × 5 → 70% × 3 → 85% × 1. Don't skip these — they prime the CNS for heavy pulling.</div><div class="ex-badges"><span class="ex-badge badge-vol">4 sets</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-strength open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">💪</div>
+      <div class="phase-header-text"><div class="phase-name">Strength Training</div><div class="phase-meta">Deadlift-led · back thickness · biceps</div></div>
+      <span class="phase-time-badge">70 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="ex-grid">
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=180&h=120&fit=crop&auto=format" alt="deadlift"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Conventional Deadlift</div><div class="ex-tip">The king of compound movements. Bar over mid-foot, hips below shoulders, chest tall. Lock glutes at top. Don't bounce reps — reset each one.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×4–5</span><span class="ex-badge badge-rest">Rest 3 min</span><span class="ex-badge badge-tip">⚡ Main lift</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=180&h=120&fit=crop&auto=format" alt="chest supported row"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Chest-Supported DB Row</div><div class="ex-tip">Removes lower back fatigue post-deadlift. Perfect isolation of mid-back. Pull to hips, squeeze for 1s.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×10–12</span><span class="ex-badge badge-rest">Rest 90s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=180&h=120&fit=crop&auto=format" alt="pulldown"><div class="ex-img-overlay"></div><div class="ex-img-label">Compound</div></div>
+          <div class="ex-info"><div class="ex-name">Wide-Grip Lat Pulldown</div><div class="ex-tip">Lean back slightly, drive elbows to hips. Touch bar to upper chest. Don't let shoulders shrug up.</div><div class="ex-badges"><span class="ex-badge badge-vol">4×10–12</span><span class="ex-badge badge-rest">Rest 90s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1598971639058-fab3c3109a73?w=180&h=120&fit=crop&auto=format" alt="shrug"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">DB Shrug (Trap Builder)</div><div class="ex-tip">Hold heavy dumbbells. Shrug straight up — don't roll shoulders. 2-sec hold at top. Builds upper trap thickness.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×15</span><span class="ex-badge badge-rest">Rest 60s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=180&h=120&fit=crop&auto=format" alt="face pull"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Rear Delt Fly (Pec Deck Reverse)</div><div class="ex-tip">Sit backwards on pec deck. Fly arms back to your sides. Strict form — rear delts are a small muscle, don't ego lift.</div><div class="ex-badges"><span class="ex-badge badge-vol">3×15–20</span><span class="ex-badge badge-rest">Rest 45s</span></div></div>
+        </div>
+        <div class="ex-card">
+          <div class="ex-img-wrap"><img src="https://images.unsplash.com/photo-1603287681836-b174ce5074c2?w=180&h=120&fit=crop&auto=format" alt="preacher curl"><div class="ex-img-overlay"></div><div class="ex-img-label">Isolation</div></div>
+          <div class="ex-info"><div class="ex-name">Preacher Curl + Cable Curl 21s</div><div class="ex-tip">Preacher: 10 strict reps, fully stretch at bottom. Then cable 21s (7 lower half + 7 upper half + 7 full). Brutal pump.</div><div class="ex-badges"><span class="ex-badge badge-vol">3 rounds</span><span class="ex-badge badge-rest">Rest 90s</span><span class="ex-badge badge-tip">Finisher</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-cardio open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🔴</div>
+      <div class="phase-header-text"><div class="phase-name">LISS Cardio — Week Finisher</div><div class="phase-meta">Easy end to a hard week</div></div>
+      <span class="phase-time-badge">25 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cardio-block">
+        <div class="cardio-title">🚶 Incline Walk / Steady Jog</div>
+        <div class="cardio-item"><div class="cardio-emoji">🏃</div><div><div class="cardio-label">Steady-State Jog or Walk</div><div class="cardio-detail">Zone 2 cardio · 25 min at conversational pace. Flush the week's metabolic stress. Could do outdoors.</div></div></div>
+        <div class="cardio-item"><div class="cardio-emoji">📉</div><div><div class="cardio-label">Heart Rate Target</div><div class="cardio-detail">Keep HR at 120–140 BPM. This is fat-burning zone without adding recovery debt before weekend rest.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase-cooldown open">
+    <div class="phase-header" onclick="togglePhase(this)">
+      <div class="phase-icon-wrap">🧊</div>
+      <div class="phase-header-text"><div class="phase-name">Cooldown & Weekly Recovery</div><div class="phase-meta">Prep body for weekend rest</div></div>
+      <span class="phase-time-badge">10 min</span><div class="phase-chevron"></div>
+    </div>
+    <div class="phase-body">
+      <div class="cooldown-block">
+        <div class="cooldown-item"><div class="cardio-emoji">🦵</div><div><div class="cooldown-label">Hamstring + Glute Stretch</div><div class="cooldown-detail">60s each side — posterior chain is taxed from deadlifts. Take extra time here today.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">🙆</div><div><div class="cooldown-label">Cat-Cow + Spinal Twist</div><div class="cooldown-detail">10 cat-cows then lying spinal twist 45s each side — decompress the spine after heavy loading.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">🫀</div><div><div class="cooldown-label">Full-Body Foam Roll</div><div class="cooldown-detail">Quads, IT band, upper back, lats — 30s per area. Promotes circulation and reduces weekend soreness.</div></div></div>
+        <div class="cooldown-item"><div class="cardio-emoji">😮‍💨</div><div><div class="cooldown-label">10-Minute Meditation / Savasana</div><div class="cooldown-detail">Lie flat, close eyes, breathe. The week is done. Let your nervous system shift into recovery mode.</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<!-- ── TIPS SECTION ── -->
+<div class="tips-section">
+  <div class="tips-card">
+    <div class="tips-title">Essential Training Tips</div>
+    <div class="tip-row"><div class="tip-icon">📈</div><div class="tip-text"><strong>Progressive Overload:</strong> Add 2.5kg to compound lifts every 1–2 weeks or add 1 rep before adding weight. Keep a logbook — if you're not tracking, you're not progressing.</div></div>
+    <div class="tip-row"><div class="tip-icon">💧</div><div class="tip-text"><strong>Hydration:</strong> Drink 500ml water before training, sip during, and 750ml+ post-workout. Dehydration reduces strength by up to 15%.</div></div>
+    <div class="tip-row"><div class="tip-icon">🥗</div><div class="tip-text"><strong>Nutrition:</strong> Eat 1.8–2.2g protein per kg bodyweight daily. Have 30–40g carbs + 25–30g protein within 60 min post-workout. Chicken, eggs, paneer, dal are your friends.</div></div>
+    <div class="tip-row"><div class="tip-icon">😴</div><div class="tip-text"><strong>Sleep:</strong> 7–9 hours is when 80% of muscle repair happens. GH (growth hormone) spikes during deep sleep. Poor sleep kills gains faster than poor training.</div></div>
+    <div class="tip-row"><div class="tip-icon">🧠</div><div class="tip-text"><strong>Mind-Muscle Connection:</strong> For isolation exercises, slow the eccentric (lowering) to 3–4 seconds. Feel the muscle stretch, not just move the weight.</div></div>
+    <div class="tip-row"><div class="tip-icon">🔁</div><div class="tip-text"><strong>Deload every 4–6 weeks:</strong> Drop volume by 40% for one week. You'll come back stronger — overtraining is a real plateau killer.</div></div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>2-Hour Gym Workout Plan</strong> · Push · Pull · Legs · Push+ · Pull+<br>
+  Sat & Sun: Active rest — walk, swim, or yoga. Full rest if needed. 🏖️
 </div>
 
 <script>
-  function showWeek(w) {
-    document.querySelectorAll('.wnav-btn').forEach((b, i) => b.classList.toggle('active', i === w));
-    document.querySelectorAll('.week-content').forEach((c, i) => c.classList.toggle('active', i === w));
-    document.querySelector('.week-nav').children[w].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  function showDay(i) {
+    document.querySelectorAll('.dnav-btn').forEach((b, idx) => b.classList.toggle('active', idx === i));
+    document.querySelectorAll('.day-pane').forEach((p, idx) => p.classList.toggle('active', idx === i));
+    document.querySelector('.day-nav').children[i].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    window.scrollTo({ top: document.querySelector('.day-nav').offsetTop - 10, behavior: 'smooth' });
   }
 
-  function toggleDay(card) {
-    const isActive = card.classList.contains('active');
-    document.querySelectorAll('.day-card').forEach(c => c.classList.remove('active'));
-    if (!isActive) card.classList.add('active');
+  function togglePhase(header) {
+    const phase = header.closest('.phase');
+    phase.classList.toggle('open');
   }
 </script>
-
 </body>
 </html>
